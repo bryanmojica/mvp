@@ -1,0 +1,9 @@
+.lyric-instance.ng-binding.ng-scope {
+    font-size: 25px;
+    font-weight: lighter;
+}
+
+button {
+    font-weight: bold;
+    font-size: 16px;
+}

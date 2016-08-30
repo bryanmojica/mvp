@@ -3,6 +3,7 @@
 <head>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="style.css">
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -18,10 +19,11 @@
 		</form>
 
 		Welcome, {{ newUser }}  {{ 50 + 50 }}
-		<div ng-repeat="track in fakeLyricBase" ng-click="favLyric()">
+		<div class="lyric-instance" ng-repeat="track in fakeLyricBase" ng-click="favLyric()">
 			<td>"{{track.lyric}}"</td>
-			<td>{{track.title}}</td>
-			<td>{{track.artist}}</td>
+			<td>// {{track.title}}</td>
+			<td>// by: {{track.artist}}</td>
+			<button ng-click="favLyric()">fav this thing!</button>
 		</div>
 
 	</div>

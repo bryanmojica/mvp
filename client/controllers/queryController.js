@@ -27,11 +27,11 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
     $http.get(apiURL + username + apiKey).then(function (response) {
       console.log(response.data, 'RESPONSE!');
       
-      taggy = response.data.lovedtracks.track;
+      lovedTrack = response.data.lovedtracks.track;
 
-      for ( var i = 0; i < taggy.length; i++ ) {
-        var trackArtist = taggy[i].artist.name;
-        var trackName = taggy[i].name;
+      for ( var i = 0; i < lovedTrack.length; i++ ) {
+        var trackArtist = lovedTrack[i].artist.name;
+        var trackName = lovedTrack[i].name;
         console.log('loved track is', trackArtist + ' : ' + trackName);
       }
     });
@@ -48,15 +48,27 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
 
   };
 
+  var testLyricAPI = function () {
+    $http.get('/api/givemelyrics').then(function (data) {
+      console.log('THE RESULT OF LYRIC API CALL IS ', data);
+    });
+  };
+
+  testLyricAPI();
+
   $scope.favLyric = function () {
     console.log('Im expressing some damn interest in this track!');
   };
 
   $scope.fakeLyricBase = [
-      {artist: 'LCD Soundsystem', lyric: 'The time has come, the time has come, the time has come again', title: 'Us v Them'},
-      {artist: 'LCD Soundsystem', lyric: 'The time has come, the time has come, the time has come again', title: 'Us v Them'},
-      {artist: 'LCD Soundsystem', lyric: 'The time has come, the time has come, the time has come again', title: 'Us v Them'},
-      {artist: 'LCD Soundsystem', lyric: 'The time has come, the time has come, the time has come again', title: 'Us v Them'}
+      {artist: 'LCD Soundsystem', lyric: 'The time has come, the time has come, the time has come today', title: 'Us v Them'},
+      {artist: 'Young Thug', lyric: 'We came straight from the bottom, to the top, my lifestyle', title: 'Lifestyle'},
+      {artist: 'The Strokes', lyric: 'Twenty-nine different attributes, Only seven that you like', title: 'You Only Live Once'},
+      {artist: 'LCD Soundsystem', lyric: 'The time has come, the time has come, the time has come today', title: 'Us v Them'},
+      {artist: 'LCD Soundsystem', lyric: 'The time has come, the time has come, the time has come today', title: 'Us v Them'},
+      {artist: 'Young Thug', lyric: 'We came straight from the bottom, to the top, my lifestyle', title: 'Lifestyle'},
+      {artist: 'The Strokes', lyric: 'Twenty-nine different attributes, Only seven that you like', title: 'You Only Live Once'},
+      {artist: 'LCD Soundsystem', lyric: 'The time has come, the time has come, the time has come today', title: 'Us v Them'}
   ];
 
   console.log($scope.fakeLyricBase);
