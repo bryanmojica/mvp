@@ -39,25 +39,49 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
     // once random lyric has been grabbed, send it to the node API
 
     $http.post('/api/lyrics', $scope.returnedFromAbove)
-         .success(function (data) {
+         .then(function (data) {
+            console.log('DATA IS THIS RIGHT NOW', data);
            // send this on to the DB in a form it can handle
          })
          .error(function (data) {
            console.log('Error: ' + data);
          });
-
   };
 
   var testLyricAPI = function () {
-    $http.get('/api/givemelyrics').then(function (data) {
-      console.log('THE RESULT OF LYRIC API CALL IS ', data);
+    $http({
+      method: 'GET',
+      url: '/api/givemelyrics',
+      data: 'here\'s a test pass'
     });
+
+    //below was half-working.. not getting to loop
+    /*$http.get('/api/givemelyrics').then(function (data) {
+    	console.log('GOT THE OBJ BACK AS ', data.data);
+
+    	return function () {
+    			for (var i = 0; i < data.data; i ++) {
+    	  var lyricSnippet = data.data[i].snippet;
+    	  console.log('we are looping');
+    	  console.log('INDIV SNIPPET IS', lyricSnippet);
+    	}
+    	}
+    	
+    });*/
   };
 
   testLyricAPI();
 
   $scope.favLyric = function () {
     console.log('Im expressing some damn interest in this track!');
+    // this grabs an object that contains the track data (via .track)
+    // pertinent track properties are HERE:
+    console.log('ARTIST IS', this.track.artist);
+    console.log('LYRICS IS', this.track.lyric);
+    console.log('TITLE IS ', this.track.title);
+    // push into object / db on click
+    // and add class, to style
+      // then display selected tracks in another pane
   };
 
   $scope.fakeLyricBase = [

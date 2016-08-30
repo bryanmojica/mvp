@@ -12,13 +12,15 @@
 
 <body>
 	<div class="container" ng-controller="QueryController">
-		<h1>Herd.ly</h1>
-
-		<form>
-			<input ng-model="newUser"><button class="submit" ng-click="genLyric()">submit</button>
-		</form>
+		<div class="top-wrap">
+		  <img src="http://67.media.tumblr.com/21dd461b7a478dda503cba3142b1b96e/tumblr_mk16gs0MGR1rvjqm6o1_1280.jpg">
+			<h1>Herd.ly</h1>
+			<form>
+				<input ng-model="newUser"><button class="submit" ng-click="genLyric()">submit</button>
+			</form>
 
 		Welcome, {{ newUser }}  {{ 50 + 50 }}
+		</div>
 		<div class="lyric-instance" ng-repeat="track in fakeLyricBase" ng-click="favLyric()">
 			<td>"{{track.lyric}}"</td>
 			<td>// {{track.title}}</td>

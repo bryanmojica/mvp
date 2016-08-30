@@ -56,7 +56,10 @@ app.post('/api/lyrics', function(req, res) {
   console.log('we got a post req');
 });
 
+// to avoid CORS issue, we hit the API from server side, sending the req data back to
+// client
 app.get('/api/givemelyrics', function (req, res) {
+	console.log('REQ DATA HERE IS', + req.data);
 	// res.send('HERE IS A GIVEMELYRIC RESPONSE');
   request.get('http://api.lyricsnmusic.com/songs?api_key=dd7afb1b9dc70db68cef04c42d37ef&q=%20clocks').on('response', function(response) {
    /* if (err) {
@@ -84,9 +87,9 @@ app.get('/api/lyrics', function(req, res) {
   console.log('we got a post req');
 });
 
-// 404 service
+// 404 / other routing
 app.get('/*', function (req, res) {
-  res.send('are you lost? must be bc this here is our 404 notice. click yr heels and get back to the index.');
+  res.send('are you lost? must be bc this here is our 404 notice. click yr heels, repeat \"there\'s no place like home\" (try hitting the back button), and get back to the index.');
 });
 
 app.listen(1337);

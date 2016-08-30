@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/bryanmojica/mvp#readme",
   "dependencies": {
+    "angular": "^1.5.8",
     "mongoose": "^4.5.10"
   }
 }
