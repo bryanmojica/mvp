@@ -65,9 +65,6 @@ app.get('/api/givemelyrics', function (req, res) {
 	console.log('REQ DATA HERE IS', req.url.params);*/
 	// res.send('HERE IS A GIVEMELYRIC RESPONSE');
   request.get('http://api.lyricsnmusic.com/songs?api_key=dd7afb1b9dc70db68cef04c42d37ef&q=%20clocks').on('response', function(response) {
-   /* if (err) {
-      return err;
-    }*/
     var received = '';
 
     response.on('data', function (chunk) {

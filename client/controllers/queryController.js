@@ -12,6 +12,8 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
          console.log('error: ' + data);
        });
 
+  var username = $scope.newUser;
+
   console.log('controller is hooked up!');
 
   var apiURL = 'http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=';
@@ -36,26 +38,29 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
       }
     });
 
+
+    testLyricAPI(username);
+
     // once random lyric has been grabbed, send it to the node API
 
-    $http.post('/api/lyrics', $scope.returnedFromAbove)
+    /*$http.post('/api/lyrics', $scope.returnedFromAbove)
          .then(function (data) {
             console.log('DATA IS THIS RIGHT NOW', data);
            // send this on to the DB in a form it can handle
          })
          .error(function (data) {
            console.log('Error: ' + data);
-         });
+         });*/
   };
 
-  var param2 = 'testing'
+  var thisThing = $scope.userName;
 
-  var testLyricAPI = function () {
-  	 
+  var testLyricAPI = function (username) {
+  	console.log('THIS THING HERE IS', username);
     $http({
       method: 'GET',
       url: '/api/givemelyrics',
-      params: { text: 'THIS RIGHT HERE IS A TEST' }
+      params: { text: username }
     });
 
     //below was half-working.. not getting to loop
