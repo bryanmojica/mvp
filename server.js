@@ -14,11 +14,6 @@ app.get('/', function (req, res) {
   }
 });
 
-/*// handle username submissions from client
-app.post('/api/links', funciton (req, res) {
-  console.log(req);
-});*/
-
 // 404 service
 app.get('/*', function (req, res) {
   res.send('are you lost? must be bc this here is our 404 notice. click yr heels and get back to the index.');
@@ -26,11 +21,16 @@ app.get('/*', function (req, res) {
 
 // init Mongo schema
 
-var Schema = mongoose.Schema;
+var LyricSchema = new mongoose.Schema({
+  artist: {
+    type: String,
+    required: true
+  },
 
-var lyricSchema = new Schema({
-  artist:  String,
-  lyric: String
+  lyric: {
+    type: String,
+    required: true
+  }
 });
 
 app.listen(1337);
