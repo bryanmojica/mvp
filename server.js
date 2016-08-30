@@ -27,7 +27,12 @@ var lyricSchema = new mongoose.Schema({
 
 var Lyric = mongoose.model('Lyric', lyricSchema);
 
-var newLyric = new Lyric({ artist: 'test', lyric: 'wooah-oh' });
+// THIS UTIL / REQUEST HANDLER METHOD IS A WIP 
+var createNewLyric = function (req, resp) {
+  var newLyric = new Lyric({ artist: 'test', lyric: 'wooah-oh' });
+};
+
+
 
 // ROUTES ----------------------------------------------------------------------------
 
