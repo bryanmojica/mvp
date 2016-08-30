@@ -2,15 +2,24 @@ var herdlyApp = angular.module('herdlyApp', []);
 
 herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $http) {
 
-	var vm = this;
+  console.log('controller is hooked up!');
 
-	console.log('controller is hooked up!');
+  var apiURL = 'http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=';
+  var apiKey = '&api_key= 5c05369bfa338d8a5c3ec52d18663241&format=json';
 
-	var taggy;
 
-	$scope.genLyric = function () {
-   console.log('proving click handler', $scope.newUser);
-	};
+  // take username on click submission
+  // fire GET request
+  $scope.genLyric = function () {
+    console.log('proving click handler', $scope.newUser);
+
+    var username = $scope.newUser;
+
+    $http.get(apiURL + username + apiKey).then(function (response) {
+      console.log(response.data, 'RESPONSE!')});
+  
+  };
+
 
 	// toying with LASTFM API
 	/*$http.get('http://ws.audioscrobbler.com/2.0/?method=user.gettoptags&user=bryytunes&api_key= 5c05369bfa338d8a5c3ec52d18663241&format=json').then(function (response) {
