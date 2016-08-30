@@ -16,7 +16,7 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
 
   console.log('controller is hooked up!');
 
-  var apiURL = 'http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=';
+  var apiURL = 'http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=';
   var apiKey = '&api_key= 5c05369bfa338d8a5c3ec52d18663241&format=json';
 
 
@@ -28,22 +28,22 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
   // using username from input, fire GET on click
   $scope.generateLyric = function () {
 
-    var selectRandomTrack = Math.floor(Math.random() * 40);
+    var selectRandomTrack = Math.floor(Math.random() * 50);
 
     var username = $scope.newUser;
     $http.get(apiURL + username + apiKey).then(function (response) {
       console.log(response.data, 'RESPONSE!');
       
-      lovedTrack = response.data.lovedtracks.track;
+      lovedTrack = response.data.recenttracks.track;
 
       for ( var i = 0; i < lovedTrack.length; i++ ) {
-        var trackArtist = lovedTrack[i].artist.name;
-        var trackName = lovedTrack[i].name;
-        console.log('loved track is', trackArtist + ' : ' + trackName);
+        var trackArtist = lovedTrack[selectRandomTrack].artist['#text'];
+        var trackName = lovedTrack[selectRandomTrack].name;
+        console.log('RANDOM RECENT TRACK IS', trackArtist + ' : ' + trackName);
       }
 
       console.log('RANDOM RECENT HERE IS --- ', selectRandomTrack);
-
+      console.log('RANDOM RECENT PROPS ARE --- ', selectRandomTrack);
     });
 
     testLyricAPI(username);
@@ -52,12 +52,12 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
   var userNameHere = $scope.userName;
 
   var testLyricAPI = function (username) {
-   	var selectRandomTrack = Math.floor(Math.random() * 40);
+   	var selectRandomTrack = Math.floor(Math.random() * 50);
     console.log('THIS THING HERE SHOULD BE OUR USERNAME, PASSED INTO TESTLYRIC API FUNC', username);
     $http({
       method: 'GET',
       url: '/api/givemelyrics',
-      params: { text: username }
+      params: { username: username }
     }).then(function(response) {
       console.log('RESPONSE HERE IS GOING TO BE', response.data[selectRandomTrack]);
     });
