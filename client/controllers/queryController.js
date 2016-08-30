@@ -57,16 +57,22 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
       var lyricSnippet = '';
       // console.log('RESPONSE WITHIN LYRIC CALL IS', response);
       if ( !response.data[selectRandomTrack] ) {
-        lyricSnippet = 'wub wub, bleep bloop. looks like an instrumental! (or just a new / obscure track - well done)';
+        slicedSnippet = 'wub wub, bleep bloop. looks like an instrumental! (or just new / obscure track)';
       }
       else { 
         lyricSnippet = response.data[selectRandomTrack].snippet;
+        console.log('TOTAL TRACK LYRIC RESPONSE IS', response.data[selectRandomTrack]);
+        var slicedSnippet = lyricSnippet.split('\n')[2];
+        console.log('full snipp is', lyricSnippet);
+        console.log('lyricSnippet is', slicedSnippet);
       }
+
       $scope.fakeLyricBase.push({
         artist: trackArtist,
-        lyric: lyricSnippet,
+        lyric: slicedSnippet,
         title: trackName
       });
+
       console.log($scope.fakeLyricBase);
       console.log('GENERATE LYRIC SNIPPET IS -------------- !!!!!!!!!!!!!!', lyricSnippet);
     });
@@ -86,29 +92,33 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
     });*/
   };
 
-  /*passToLyricAPI();*/
 
   $scope.favLyric = function () {
     console.log('Im expressing some damn interest in this track!');
     // this grabs an object that contains the track data (via .track)
     // pertinent track properties are HERE:
-    console.log('ARTIST IS', this.track.artist);
-    console.log('LYRICS IS', this.track.lyric);
-    console.log('TITLE IS ', this.track.title);
+    var trackArtist = this.track.artist;
+    var lyric = this.track.lyric;
+    var trackName = this.track.title;
+
+    $scope.favoriteLyrics.push({
+      artist: trackArtist,
+      lyric: lyric,
+      title: trackName
+    });
+
+    console.log($scope.favoriteLyrics);
     // push into object / db on click
     // and add class, to style
       // then display selected tracks in another pane
   };
 
+  $scope.favoriteLyrics = [];
+
   $scope.fakeLyricBase = [
- /*     {artist: 'LCD Soundsystem', lyric: 'The time has come, the time has come, the time has come today', title: 'Us v Them'},
-      {artist: 'Young Thug', lyric: 'We came straight from the bottom, to the top, my lifestyle', title: 'Lifestyle'},
-      {artist: 'The Strokes', lyric: 'Twenty-nine different attributes, Only seven that you like', title: 'You Only Live Once'},
-      {artist: 'LCD Soundsystem', lyric: 'The time has come, the time has come, the time has come today', title: 'Us v Them'},
       {artist: 'LCD Soundsystem', lyric: 'The time has come, the time has come, the time has come today', title: 'Us v Them'},
       {artist: 'Young Thug', lyric: 'We came straight from the bottom, to the top, my lifestyle', title: 'Lifestyle'},
       {artist: 'The Strokes', lyric: 'Twenty-nine different attributes, Only seven that you like', title: 'You Only Live Once'},
-      {artist: 'LCD Soundsystem', lyric: 'The time has come, the time has come, the time has come today', title: 'Us v Them'}*/
   ];
 
   console.log($scope.fakeLyricBase);

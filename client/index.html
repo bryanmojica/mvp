@@ -23,9 +23,14 @@
 		</div>
 		<div class="lyric-instance" ng-repeat="track in fakeLyricBase track by $index" ng-click="favLyric()">
 			<td>"{{track.lyric}}"</td>
-			<td>// {{track.title}}</td>
-			<td>// by: {{track.artist}}</td>
+			<td>// "{{track.title}}"</td>
+			<td>by: {{track.artist}}</td>
 			<button ng-click="favLyric()">fav this thing!</button>
+		</div>
+
+		<div ng-view="favorites" class="prev-favs">
+			
+
 		</div>
 
 	</div>
