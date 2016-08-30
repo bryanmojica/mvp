@@ -48,11 +48,14 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
          });
   };
 
+  var param2 = 'testing'
+
   var testLyricAPI = function () {
+  	 
     $http({
       method: 'GET',
       url: '/api/givemelyrics',
-      data: 'here\'s a test pass'
+      params: { text: 'THIS RIGHT HERE IS A TEST' }
     });
 
     //below was half-working.. not getting to loop

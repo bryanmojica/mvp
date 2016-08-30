@@ -2,6 +2,7 @@ var express = require('express');
 var http = require('http');
 var mongoose = require('mongoose');
 var request = require('request');
+var bodyParser = require('body-parser');
 
 var app = express();
 
@@ -59,7 +60,9 @@ app.post('/api/lyrics', function(req, res) {
 // to avoid CORS issue, we hit the API from server side, sending the req data back to
 // client
 app.get('/api/givemelyrics', function (req, res) {
-	console.log('REQ DATA HERE IS', + req.data);
+	console.log('REQ DATA PARAM ARE', req.query);
+	/*console.log('REQ DATA URL IS', req.url);
+	console.log('REQ DATA HERE IS', req.url.params);*/
 	// res.send('HERE IS A GIVEMELYRIC RESPONSE');
   request.get('http://api.lyricsnmusic.com/songs?api_key=dd7afb1b9dc70db68cef04c42d37ef&q=%20clocks').on('response', function(response) {
    /* if (err) {
@@ -71,7 +74,7 @@ app.get('/api/givemelyrics', function (req, res) {
       received += chunk;
     });
     response.on('end', function () {
-      console.log(received);
+      /*console.log(received);*/
       res.send(received);
     });
   }).on('error', function(error) {
