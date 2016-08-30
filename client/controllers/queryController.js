@@ -2,7 +2,7 @@ var herdlyApp = angular.module('herdlyApp', []);
 
 herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $http) {
 
-		// when landing on page, get previous lyrics and dispaly them
+		// when landing on page, get previous lyrics from DB and display them
   $http.get('/api/lyrics')
        .success(function(data) {
          $scope.lyrics = data;
@@ -23,55 +23,43 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
 
   // lastFM API returns most recent 40 songs listened to, 
   // so generate random index from 0 - 39
-  var selectRandomTrack = Math.floor(Math.random() * 40);
-
-  console.log('RANDOM SELECTION IS', selectRandomTrack);
   
-  // take username on click submission
-  // fire GET request
-  $scope.genLyric = function () {
+
+  // using username from input, fire GET on click
+  $scope.generateLyric = function () {
+
+    var selectRandomTrack = Math.floor(Math.random() * 40);
 
     var username = $scope.newUser;
-			    $http.get(apiURL + username + apiKey).then(function (response) {
-			      console.log(response.data, 'RESPONSE!');
-			      
-			      lovedTrack = response.data.lovedtracks.track;
+    $http.get(apiURL + username + apiKey).then(function (response) {
+      console.log(response.data, 'RESPONSE!');
+      
+      lovedTrack = response.data.lovedtracks.track;
 
-			      for ( var i = 0; i < lovedTrack.length; i++ ) {
-			        var trackArtist = lovedTrack[i].artist.name;
-			        var trackName = lovedTrack[i].name;
-			        console.log('loved track is', trackArtist + ' : ' + trackName);
-			      }
-			    });
+      for ( var i = 0; i < lovedTrack.length; i++ ) {
+        var trackArtist = lovedTrack[i].artist.name;
+        var trackName = lovedTrack[i].name;
+        console.log('loved track is', trackArtist + ' : ' + trackName);
+      }
+
+      console.log('RANDOM RECENT HERE IS --- ', selectRandomTrack);
+
+    });
 
     testLyricAPI(username);
-
-
-
-    
-
-    // once random lyric has been grabbed, send it to the node API
-
-    /*$http.post('/api/lyrics', $scope.returnedFromAbove)
-         .then(function (data) {
-            console.log('DATA IS THIS RIGHT NOW', data);
-           // send this on to the DB in a form it can handle
-         })
-         .error(function (data) {
-           console.log('Error: ' + data);
-         });*/
   };
 
-  var thisThing = $scope.userName;
+  var userNameHere = $scope.userName;
 
   var testLyricAPI = function (username) {
-  	console.log('THIS THING HERE SHOULD BE OUR USERNAME, PASSED INTO TESTLYRIC API FUNC', username);
+   	var selectRandomTrack = Math.floor(Math.random() * 40);
+    console.log('THIS THING HERE SHOULD BE OUR USERNAME, PASSED INTO TESTLYRIC API FUNC', username);
     $http({
       method: 'GET',
       url: '/api/givemelyrics',
       params: { text: username }
     }).then(function(response) {
-      console.log('RESPONSE HERE IS GOING TO BE', response.data);
+      console.log('RESPONSE HERE IS GOING TO BE', response.data[selectRandomTrack]);
     });
 
     //below was half-working.. not getting to loop
