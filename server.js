@@ -32,8 +32,6 @@ var createNewLyric = function (req, resp) {
   var newLyric = new Lyric({ artist: 'test', lyric: 'wooah-oh' });
 };
 
-
-
 // ROUTES ----------------------------------------------------------------------------
 
 app.get('/', function (req, res) {

@@ -18,11 +18,13 @@
 		</form>
 
 		Welcome, {{ newUser }}  {{ 50 + 50 }}
+		<div ng-repeat="track in fakeLyricBase" ng-click="favLyric()">
+			<td>"{{track.lyric}}"</td>
+			<td>{{track.title}}</td>
+			<td>{{track.artist}}</td>
+		</div>
+
 	</div>
-
-
-	<div ng-view></div>
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 <script src="controllers/queryController.js"></script>
