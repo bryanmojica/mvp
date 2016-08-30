@@ -1,6 +1,29 @@
 var herdlyApp = angular.module('herdlyApp', []);
 
+
+
 herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $http) {
+
+  var fullLyricPull = function () {
+    return $http({
+      method: 'GET',
+      url: '/api/lyrics'
+    }).then(function (response) {
+      console.log('FULL LYRIC PULL IS BEING PERFORMED');
+      return response.data;
+    });
+  };
+
+  var addLyric = function (lyric) {
+    return $http({
+      method: 'POST',
+      url: 'api/lyrics',
+      data: lyric
+    });
+  };
+
+  fullLyricPull();
+
 
 		// when landing on page, get previous lyrics from DB and display them
   $http.get('/api/lyrics')
@@ -19,15 +42,11 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
   var apiURL = 'http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=';
   var apiKey = '&api_key= 5c05369bfa338d8a5c3ec52d18663241&format=json';
 
-
-
-  // lastFM API returns most recent 40 songs listened to, 
-  // so generate random index from 0 - 39
-  
-
   // using username from input, fire GET on click
   $scope.generateLyric = function () {
 
+    // lastFM API returns most recent 50 songs listened to, 
+    // so generate random index from 0 - 49
     var selectRandomTrack = Math.floor(Math.random() * 50);
 
     var username = $scope.newUser;
@@ -76,20 +95,6 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
       console.log($scope.fakeLyricBase);
       console.log('GENERATE LYRIC SNIPPET IS -------------- !!!!!!!!!!!!!!', lyricSnippet);
     });
-
-    //below was half-working.. not getting to loop
-    /*$http.get('/api/givemelyrics').then(function (data) {
-    	console.log('GOT THE OBJ BACK AS ', data.data);
-
-    	return function () {
-    			for (var i = 0; i < data.data; i ++) {
-    	  var lyricSnippet = data.data[i].snippet;
-    	  console.log('we are looping');
-    	  console.log('INDIV SNIPPET IS', lyricSnippet);
-    	}
-    	}
-    	
-    });*/
   };
 
 
@@ -101,7 +106,7 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
     var lyric = this.track.lyric;
     var trackName = this.track.title;
 
-    $scope.favoriteLyrics.push({
+    $scope.favoriteLyrics.unshift({
       artist: trackArtist,
       lyric: lyric,
       title: trackName

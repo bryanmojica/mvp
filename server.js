@@ -3,6 +3,7 @@ var http = require('http');
 var mongoose = require('mongoose');
 var request = require('request');
 var bodyParser = require('body-parser');
+var Q = require('q');
 
 var app = express();
 
@@ -34,6 +35,10 @@ var createNewLyric = function (req, resp) {
   var newLyric = new Lyric({ artist: 'test', lyric: 'wooah-oh' });
 };
 
+var returnLyrics = function () {
+
+};
+
 // ROUTES ----------------------------------------------------------------------------
 
 /*
@@ -62,8 +67,8 @@ app.post('/api/lyrics', function(req, res) {
 app.get('/api/givemelyrics', function (req, res) {
 /*	console.log('REQ DATA PARAM ARE', req.query);
 	console.log('INDIV VALS ARE', req.query.trackArtist + req.query.trackName);*/
-	var trackArtist = req.query.trackArtist;
-	var trackName = req.query.trackName;
+  var trackArtist = req.query.trackArtist;
+  var trackName = req.query.trackName;
 	/*console.log('REQ DATA URL IS', req.url);
 	console.log('REQ DATA HERE IS', req.url.params);*/
 	// res.send('HERE IS A GIVEMELYRIC RESPONSE');
@@ -84,11 +89,13 @@ app.get('/api/givemelyrics', function (req, res) {
 
 });
 
-app.get('/api/lyrics', function(req, res) {
+// app.get('/api/lyrics', function(req, res) {
 // generate a new lyric, information comes from AJAX request from Angular
-  /*res.send('THIS IS OUR CURRENT /api/lyrics RESPONSE');*/
-  console.log('we got a post req');
-});
+  /*res.send('THIS IS OUR CURRENT /api/lyrics RESPONSE');
+  returnLyrics({
+
+  });
+});*/
 
 // 404 / other routing
 app.get('/*', function (req, res) {
