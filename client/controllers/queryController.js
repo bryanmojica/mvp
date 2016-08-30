@@ -22,9 +22,10 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
   // take username on click submission
   // fire GET request
   $scope.genLyric = function () {
-    console.log('proving click handler', $scope.newUser);
 
     var username = $scope.newUser;
+
+    testLyricAPI(username);
 
     $http.get(apiURL + username + apiKey).then(function (response) {
       console.log(response.data, 'RESPONSE!');
@@ -39,7 +40,7 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
     });
 
 
-    testLyricAPI(username);
+    
 
     // once random lyric has been grabbed, send it to the node API
 
@@ -61,6 +62,8 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
       method: 'GET',
       url: '/api/givemelyrics',
       params: { text: username }
+    }).then(function(response) {
+      console.log('RESPONSE HERE IS GOING TO BE', response);
     });
 
     //below was half-working.. not getting to loop
