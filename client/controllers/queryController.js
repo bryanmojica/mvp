@@ -24,7 +24,6 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
 
   fullLyricPull();
 
-
 		// when landing on page, get previous lyrics from DB and display them
   $http.get('/api/lyrics')
        .success(function(data) {
@@ -61,6 +60,7 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
       passToLyricAPI(trackArtist, trackName);
     });
 
+
   };
 
   var userNameHere = $scope.userName;
@@ -76,12 +76,11 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
       var lyricSnippet = '';
       // console.log('RESPONSE WITHIN LYRIC CALL IS', response);
       if ( !response.data[selectRandomTrack] ) {
-        slicedSnippet = 'wub wub, bleep bloop. looks like an instrumental! (or just new / obscure track)';
-      }
-      else { 
+        var slicedSnippet = 'wub wub, bleep bloop. looks like an instrumental! (or just new / obscure track)';
+      } else { 
         lyricSnippet = response.data[selectRandomTrack].snippet;
         console.log('TOTAL TRACK LYRIC RESPONSE IS', response.data[selectRandomTrack]);
-        var slicedSnippet = lyricSnippet.split('\n')[2];
+        slicedSnippet = lyricSnippet.split('\n')[0, 2];
         console.log('full snipp is', lyricSnippet);
         console.log('lyricSnippet is', slicedSnippet);
       }
@@ -90,6 +89,10 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
         artist: trackArtist,
         lyric: slicedSnippet,
         title: trackName
+      });
+
+      addLyric({
+
       });
 
       console.log($scope.fakeLyricBase);

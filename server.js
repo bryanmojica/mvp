@@ -35,22 +35,21 @@ var createNewLyric = function (req, resp) {
   var newLyric = new Lyric({ artist: 'test', lyric: 'wooah-oh' });
 };
 
-var returnLyrics = function () {
+var findAllLyrics = Q.nbind(Lyric.find, Lyric);
 
+var pullLyrics = function () {
+  findAllLyrics({})
+    .then(function (lyrics) {
+      res.json(lyrics);
+    })
+    .fail(function (error) {
+      next(error);
+    });
 };
 
+
+
 // ROUTES ----------------------------------------------------------------------------
-
-/*
-app.get('/', function (req, res) {
-  if ( req.method === 'GET' ) {
-    console.log('we are live and listening -- herd.ly');	
-
-    app.get('http://api.lyricsnmusic.com/songs?api_key=dd7afb1b9dc70db68cef04c42d37ef&q=%20clocks').then(function (data) {
-  console.log('THE RESULT OF LYRIC API CALL IS ', data);
-});
-  }
-});*/
 
 app.post('/api/lyrics', function(req, res) {
 // generate a new lyric, information comes from AJAX request from Angular
@@ -88,14 +87,6 @@ app.get('/api/givemelyrics', function (req, res) {
   });
 
 });
-
-// app.get('/api/lyrics', function(req, res) {
-// generate a new lyric, information comes from AJAX request from Angular
-  /*res.send('THIS IS OUR CURRENT /api/lyrics RESPONSE');
-  returnLyrics({
-
-  });
-});*/
 
 // 404 / other routing
 app.get('/*', function (req, res) {
