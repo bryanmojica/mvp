@@ -1,0 +1,7 @@
+<div class="container" ng-controller="FavoriteController">
+	<div class="lyric-instance col-md-4" ng-repeat="track in favTracks track by $index" ng-click="favLyric()">
+		<td>"{{track.lyric}}"</td>
+		<td>// "{{track.title}}"</td>
+		<td>by: {{track.artist}}</td>
+	</div>
+</div>
