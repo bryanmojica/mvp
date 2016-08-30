@@ -21,7 +21,7 @@
 
 		Welcome, {{ newUser }}  {{ 50 + 50 }}
 		</div>
-		<div class="lyric-instance" ng-repeat="track in fakeLyricBase track by $index" ng-click="favLyric()">
+		<div class="lyric-instance col-md-4" ng-repeat="track in fakeLyricBase track by $index" ng-click="favLyric()">
 			<td>"{{track.lyric}}"</td>
 			<td>// "{{track.title}}"</td>
 			<td>by: {{track.artist}}</td>
