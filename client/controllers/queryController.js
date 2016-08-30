@@ -4,6 +4,9 @@ var herdlyApp = angular.module('herdlyApp', []);
 
 herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $http) {
 
+  var username = $scope.newUser;
+  var apiKey = '&api_key= 5c05369bfa338d8a5c3ec52d18663241&format=json';
+  
   var fullLyricPull = function () {
     return $http({
       method: 'GET',
@@ -22,7 +25,10 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
     });
   };
 
+
+
   fullLyricPull();
+  
 
 		// when landing on page, get previous lyrics from DB and display them
   $http.get('/api/lyrics')
@@ -38,17 +44,32 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
 
   console.log('controller is hooked up!');
 
-  var apiURL = 'http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=';
-  var apiKey = '&api_key= 5c05369bfa338d8a5c3ec52d18663241&format=json';
 
   // using username from input, fire GET on click
   $scope.generateLyric = function () {
+
+    $scope.lovedTracks = [];
+  	 
+		  var pullUserLoved = function () {
+		    var apiURL = 'http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=';
+
+		    $http.get(apiURL + 'bryytunes' + apiKey).then(function (response) {
+		      response.data.lovedtracks.track.forEach(function (track) {
+		      	  $scope.lovedTracks.push(track);
+		      });
+		    });    
+		  };
+
+		  pullUserLoved();
+		  console.log($scope.lovedTracks, 'is thisS');
+
+    
+    var apiURL = 'http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=';
 
     // lastFM API returns most recent 50 songs listened to, 
     // so generate random index from 0 - 49
     var selectRandomTrack = Math.floor(Math.random() * 50);
 
-    var username = $scope.newUser;
     $http.get(apiURL + username + apiKey).then(function (response) {
       
       lovedTrack = response.data.recenttracks.track;
@@ -60,13 +81,14 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
       passToLyricAPI(trackArtist, trackName);
     });
 
-
   };
+  
 
   var userNameHere = $scope.userName;
 
   var passToLyricAPI = function (trackArtist, trackName) {
     var selectRandomTrack = Math.floor(Math.random() * 50);
+
 
     $http({
       method: 'GET',
@@ -76,23 +98,27 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
       var lyricSnippet = '';
       // console.log('RESPONSE WITHIN LYRIC CALL IS', response);
       if ( !response.data[selectRandomTrack] ) {
-        var slicedSnippet = 'wub wub, bleep bloop. looks like an instrumental! (or just new / obscure track)';
+        var slicedSnippet = '*wub wub, bleep bloop* looks like an instrumental! (or just new / obscure track)';
       } else { 
         lyricSnippet = response.data[selectRandomTrack].snippet;
         console.log('TOTAL TRACK LYRIC RESPONSE IS', response.data[selectRandomTrack]);
         slicedSnippet = lyricSnippet.split('\n')[0, 2];
+        
         console.log('full snipp is', lyricSnippet);
         console.log('lyricSnippet is', slicedSnippet);
       }
+		    
+		    // send to server for 
+		    $http({
+		      method: 'POST',
+		      url: '/api/createNewLyric',
+		      params: { artist: trackArtist, lyric: trackName }
+		    });
 
       $scope.fakeLyricBase.push({
         artist: trackArtist,
         lyric: slicedSnippet,
         title: trackName
-      });
-
-      addLyric({
-
       });
 
       console.log($scope.fakeLyricBase);
@@ -102,6 +128,7 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
 
 
   $scope.favLyric = function () {
+
     console.log('Im expressing some damn interest in this track!');
     // this grabs an object that contains the track data (via .track)
     // pertinent track properties are HERE:
@@ -116,6 +143,7 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
     });
 
     console.log($scope.favoriteLyrics);
+
     // push into object / db on click
     // and add class, to style
       // then display selected tracks in another pane

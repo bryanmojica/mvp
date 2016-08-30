@@ -33,6 +33,11 @@ var Lyric = mongoose.model('Lyric', lyricSchema);
 // THIS UTIL / REQUEST HANDLER METHOD IS A WIP 
 var createNewLyric = function (req, resp) {
   var newLyric = new Lyric({ artist: 'test', lyric: 'wooah-oh' });
+  newLyric.save(function(err, newLyric) {
+    if (err) {
+      console.log('Error making new lyric: ', err);
+    }
+  });
 };
 
 var findAllLyrics = Q.nbind(Lyric.find, Lyric);
@@ -59,6 +64,13 @@ app.post('/api/lyrics', function(req, res) {
   });
 
   console.log('we got a post req');
+});
+
+// create new Lyric instance in mongo
+app.post('/api/createNewLyric', function (req, res) {
+  console.log('THIS IS HAPPENIN AT CREATE NEW LYRIC', req.query);
+  var artist = req.query.artist;
+  var lyric = req.query.lyric;
 });
 
 // to avoid CORS issue, we hit the API from server side, sending the req data back to
