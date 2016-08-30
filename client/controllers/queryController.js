@@ -19,25 +19,33 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
   var apiURL = 'http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=';
   var apiKey = '&api_key= 5c05369bfa338d8a5c3ec52d18663241&format=json';
 
+
+
+  // lastFM API returns most recent 40 songs listened to, 
+  // so generate random index from 0 - 39
+  var selectRandomTrack = Math.floor(Math.random() * 40);
+
+  console.log('RANDOM SELECTION IS', selectRandomTrack);
+  
   // take username on click submission
   // fire GET request
   $scope.genLyric = function () {
 
     var username = $scope.newUser;
+			    $http.get(apiURL + username + apiKey).then(function (response) {
+			      console.log(response.data, 'RESPONSE!');
+			      
+			      lovedTrack = response.data.lovedtracks.track;
+
+			      for ( var i = 0; i < lovedTrack.length; i++ ) {
+			        var trackArtist = lovedTrack[i].artist.name;
+			        var trackName = lovedTrack[i].name;
+			        console.log('loved track is', trackArtist + ' : ' + trackName);
+			      }
+			    });
 
     testLyricAPI(username);
 
-    $http.get(apiURL + username + apiKey).then(function (response) {
-      console.log(response.data, 'RESPONSE!');
-      
-      lovedTrack = response.data.lovedtracks.track;
-
-      for ( var i = 0; i < lovedTrack.length; i++ ) {
-        var trackArtist = lovedTrack[i].artist.name;
-        var trackName = lovedTrack[i].name;
-        console.log('loved track is', trackArtist + ' : ' + trackName);
-      }
-    });
 
 
     
@@ -57,13 +65,13 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
   var thisThing = $scope.userName;
 
   var testLyricAPI = function (username) {
-  	console.log('THIS THING HERE IS', username);
+  	console.log('THIS THING HERE SHOULD BE OUR USERNAME, PASSED INTO TESTLYRIC API FUNC', username);
     $http({
       method: 'GET',
       url: '/api/givemelyrics',
       params: { text: username }
     }).then(function(response) {
-      console.log('RESPONSE HERE IS GOING TO BE', response);
+      console.log('RESPONSE HERE IS GOING TO BE', response.data);
     });
 
     //below was half-working.. not getting to loop
