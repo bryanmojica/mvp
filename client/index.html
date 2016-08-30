@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app='herdlyApp'>
+<head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<title>Herd.ly!</title>
+</head>
+
+<body>
+	<div class="container" ng-controller="QueryController">
+		<h1>Herd.ly</h1>
+
+		<form>
+			<input ng-model="newUser"><button class="submit" ng-click="genLyric()">submit</button>
+		</form>
+		Welcome, {{ newUser }}
+		{{here}}
+	</div>
+
+
+	<div ng-view></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script src="controllers/queryController.js"></script>
+</body>
+</html>
