@@ -32,32 +32,27 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
 
     var username = $scope.newUser;
     $http.get(apiURL + username + apiKey).then(function (response) {
-      console.log(response.data, 'RESPONSE!');
       
       lovedTrack = response.data.recenttracks.track;
+      
+      var trackArtist = lovedTrack[selectRandomTrack].artist['#text'];
+      var trackName = lovedTrack[selectRandomTrack].name;
+      console.log('RANDOM RECENT TRACK IS', trackArtist + ' : ' + trackName);
 
-      for ( var i = 0; i < lovedTrack.length; i++ ) {
-        var trackArtist = lovedTrack[selectRandomTrack].artist['#text'];
-        var trackName = lovedTrack[selectRandomTrack].name;
-        console.log('RANDOM RECENT TRACK IS', trackArtist + ' : ' + trackName);
-      }
-
-      console.log('RANDOM RECENT HERE IS --- ', selectRandomTrack);
-      console.log('RANDOM RECENT PROPS ARE --- ', selectRandomTrack);
+      passToLyricAPI(trackArtist, trackName);
     });
 
-    testLyricAPI(username);
   };
 
   var userNameHere = $scope.userName;
 
-  var testLyricAPI = function (username) {
+  var passToLyricAPI = function (trackArtist, trackName) {
    	var selectRandomTrack = Math.floor(Math.random() * 50);
     console.log('THIS THING HERE SHOULD BE OUR USERNAME, PASSED INTO TESTLYRIC API FUNC', username);
     $http({
       method: 'GET',
       url: '/api/givemelyrics',
-      params: { username: username }
+      params: { trackArtist: trackArtist, trackName: trackName }
     }).then(function(response) {
       console.log('RESPONSE HERE IS GOING TO BE', response.data[selectRandomTrack]);
     });
@@ -77,7 +72,7 @@ herdlyApp.controller('QueryController', ['$scope', '$http', function ($scope, $h
     });*/
   };
 
-  testLyricAPI();
+  passToLyricAPI();
 
   $scope.favLyric = function () {
     console.log('Im expressing some damn interest in this track!');

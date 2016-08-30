@@ -60,11 +60,14 @@ app.post('/api/lyrics', function(req, res) {
 // to avoid CORS issue, we hit the API from server side, sending the req data back to
 // client
 app.get('/api/givemelyrics', function (req, res) {
-	console.log('REQ DATA PARAM ARE', req.query);
+/*	console.log('REQ DATA PARAM ARE', req.query);
+	console.log('INDIV VALS ARE', req.query.trackArtist + req.query.trackName);*/
+	var trackArtist = req.query.trackArtist;
+	var trackName = req.query.trackName;
 	/*console.log('REQ DATA URL IS', req.url);
 	console.log('REQ DATA HERE IS', req.url.params);*/
 	// res.send('HERE IS A GIVEMELYRIC RESPONSE');
-  request.get('http://api.lyricsnmusic.com/songs?api_key=dd7afb1b9dc70db68cef04c42d37ef&q=%20clocks').on('response', function(response) {
+  request.get('http://api.lyricsnmusic.com/songs?api_key=dd7afb1b9dc70db68cef04c42d37ef&&artist=' + trackArtist + '&song=' + trackName).on('response', function(response) {
     var received = '';
 
     response.on('data', function (chunk) {
