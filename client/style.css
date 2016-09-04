@@ -24,3 +24,52 @@ img {
 .top-wrap.ng-binding {
     margin-left: 10px;
 }
+
+.loved-instance.col-md-12.ng-binding.ng-scope {
+    background: #f9f9f9;
+    margin-bottom: 14px;
+    font-weight: lighter;
+    font-size: 18px;
+}
+
+h2 {
+    font-size: 15px;
+    float: right;
+}
+
+.top-wrap.ng-binding {
+    margin-left: 25px;
+}
+
+.red{
+ 
+}
+
+body {
+    border: 30px solid black;
+}
+
+.blue{
+  color:blue;
+}
+
+input {
+    font-weight: lighter;
+    font-size: 22px;
+    padding-left: 12px;
+}
+
+
+button.submit {
+    background: none;
+    border: black solid;
+    margin-left: 20px;
+}
+
+
+body {
+    min-height: 1000px;
+}
+/*.starred.col-md-8 {
+    display: none;
+}*/

@@ -16,24 +16,47 @@
 		  <img src="http://67.media.tumblr.com/21dd461b7a478dda503cba3142b1b96e/tumblr_mk16gs0MGR1rvjqm6o1_1280.jpg">
 			<h1>Herd.ly</h1>
 			<form>
-				<input ng-model="newUser"><button class="submit" ng-click="generateLyric()">submit</button>
+				<input ng-model="newUser"><button class="submit" ng-click="generateLyric()" placeholder="enter lastFM username">submit</button>
 			</form>
 
-		Welcome, {{ newUser }}  {{ 50 + 50 }}
 		</div>
 
-		<div class="loved-instance col-md-3" ng-repeat="track in lovedTracks track by $index | limitTo:12">
-			<td>"{{track.name}}"</td>
-			<td>-{{track.artist.name}}</td>
-		</div>
 
-		<div class="lyric-instance col-md-4" ng-repeat="track in fakeLyricBase track by $index" ng-click="favLyric()">
-			<td>"{{track.lyric}}"</td>
-			<td>// "{{track.title}}"</td>
-			<td>by: {{track.artist}}</td>
-			<button ng-click="favLyric()">star lyric</button>
-		</div>
+    <div class="loved col-md-8">
+      <h2 class="">Recent, random lyrics from the herd</h2>
+      		<div class="lyric-instance col-md-12" ng-class="class" ng-repeat="track in newLyricBase" ng-click="favLyric(), changeClass()">
+				<td>"{{track.lyric}}"</td>
+				<td>// "{{track.title}}"</td>
+				<td>by: {{track.artist}}</td>
+				<button ng-click="favLyric()">✮ this</button>
+			</div>
+			<div class="lyric-instance col-md-12" ng-class="class" ng-repeat="track2 in lovedLyricBase track by $index" ng-click="favLyric(), changeClass()">
+				<td>"{{track2.lyric}}"</td>
+				<td>// "{{track2.title}}"</td>
+				<td>by: {{track2.artist}}</td>
+				<button ng-click="favLyric()">✮ this</button>
+			</div>
+    </div>
 
+    <div class="starred col-md-8">
+      <h2 class="">Your starred lyric snippets</h2>
+			<div class="lyric-instance col-md-12" ng-class="class" ng-repeat="track in fakeLyricBase track by $index" ng-click="favLyric(), changeClass()">
+				<td>"{{track.lyric}}"</td>
+				<td>// "{{track.title}}"</td>
+				<td>by: {{track.artist}}</td>
+				<button ng-click="favLyric()">un✮ this</button>
+			</div>
+    </div>
+
+
+
+		<div class="col-md-4">
+		  <h2 class="">Tracks you <3</h2>
+			<div class="loved-instance col-md-12" ng-repeat="track in lovedTracks track by $index | limitTo:12">
+				<td>"{{track.name}}"</td>
+				<td>-{{track.artist.name}}</td>
+			</div>
+    </div>
 		
 
 		<div class="fav-outer">
